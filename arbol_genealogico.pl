@@ -1,4 +1,4 @@
-% Definición de géneros
+% DefiniciÃ³n de gÃ©neros
 hombre(jose).
 hombre(carlos).
 hombre(augusto).
@@ -108,8 +108,8 @@ hermanos(X, Y) :- padre(P, X), padre(P, Y), madre(M, X), madre(M, Y), X \= Y.
 % X es hijo de Y si Y es padre o madre de X
 hijos(X, Y) :- padre(Y, X) ; madre(Y, X).
 
-% 3. Regla para definir hijo varón
-% X es hijo varón de Y si X es hombre y es hijo de Y
+% 3. Regla para definir hijo varÃ³n
+% X es hijo varÃ³n de Y si X es hombre y es hijo de Y
 hijo(X, Y) :- hombre(X), hijos(X,Y).
 
 % 4. Regla para definir hija
@@ -144,17 +144,17 @@ bisabuelo(X, Y) :- hombre(X), bisabuelos(X,Y).
 % X es bisabuela de Y si X es mujer y es bisabuela de Y
 bisabuela(X, Y) :- mujer(X), bisabuelos(X,Y).
 
-% 11. Regla para definir tíos
-% X es tío/a de Y si X es hermano/a del padre/madre de Y
+% 11. Regla para definir tÃ­os
+% X es tÃ­o/a de Y si X es hermano/a del padre/madre de Y
 tios(X, Y) :- padre(P, Y), hermanos(X, P)
             ; madre(M, Y), hermanos(X, M).
 
-% 12. Regla para definir tío
-% X es tío de Y si X es hombre y es tío de Y
+% 12. Regla para definir tÃ­o
+% X es tÃ­o de Y si X es hombre y es tÃ­o de Y
 tio(X,Y) :- hombre(X), tios(X,Y).
 
-% 13. Regla para definir tía
-% X es tía de Y si X es mujer y es tía de Y
+% 13. Regla para definir tÃ­a
+% X es tÃ­a de Y si X es mujer y es tÃ­a de Y
 tia(X,Y) :- mujer(X), tios(X,Y).
 
 % 14. Regla para definir primos
@@ -164,7 +164,7 @@ primos(X, Y) :- padre(P1, X), padre(P2, Y), hermanos(P1, P2), X \= Y
               ; padre(P1, X), madre(M2, Y), hermanos(P1, M2)
               ; madre(M1, X), padre(P2, Y), hermanos(M1, P2).
 
-% 15. Regla para definir primo varón
+% 15. Regla para definir primo varÃ³n
 % X es primo de Y si X es hombre y es primo de Y
 primo(X, Y) :- hombre(X), primos(X,Y).
 
@@ -180,18 +180,17 @@ primo_por_padre(X, Y) :- padre(PadreX, X), padre(PadreY, Y), hermanos(PadreX, Pa
 % X e Y son primos por parte de madre si sus madres son hermanas
 primo_por_madre(X, Y) :- madre(MadreX, X), madre(MadreY, Y), hermanos(MadreX, MadreY), X \= Y.
 
-% 19. Regla para determinar si una pareja puede procrear biológicamente
+% 19. Regla para determinar si una pareja de personas puede procrear biolÃ³gicamente
 % Una pareja puede procrear si son de sexos opuestos y no son parientes
 % cercanos
-% uso del operador OR, porque aunque no sean pareja pueden procrear
-
+% uso del operador OR, porque aunque no sean pareja de casados pueden procrear mientras se cumpla lo demas
 puede_procrear(X, Y) :-
     pareja(X, Y);
     ((hombre(X), mujer(Y)); (mujer(X), hombre(Y))),
       not(parientes_cercanos(X, Y)).
 
-% 20. Regla para evitar la procreación entre parientes cercanos
-% Dos personas son parientes cercanos si son hermanos, padre/madre e hijo/a, abuelos y nietos, o tíos y sobrinos
+% 20. Regla para evitar la procreaciÃ³n entre parientes cercanos
+% Dos personas son parientes cercanos si son hermanos, padre/madre e hijo/a, abuelos y nietos, o tÃ­os y sobrinos
 parientes_cercanos(X, Y) :-
     hermanos(X, Y);
     padre(X, Y);
